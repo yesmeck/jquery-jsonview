@@ -17,6 +17,7 @@ $(function() {
   $("#data").JSONView(data);
 });
 ```
+[Demo](http://blog.yesmeck.com/jquery-jsonview/)
 
 ## Licence
 
