@@ -155,7 +155,7 @@
 
     $(this).html(outputDoc);
 
-    var items = document.getElementsByClassName('collapsible');
+    var items = $(this)[0].getElementsByClassName('collapsible');
     for( var i = 0; i < items.length; i++) {
       addCollapser(items[i].parentNode);
     }
