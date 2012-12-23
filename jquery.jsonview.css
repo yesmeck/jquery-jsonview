@@ -1,42 +1,47 @@
-.prop {
+#jsonview {
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+#jsonview .prop {
   font-weight: bold;
 }
 
-.null {
+#jsonview .null {
   color: red;
 }
 
-.bool {
+#jsonview .bool {
   color: blue;
 }
 
-.num {
+#jsonview .num {
   color: blue;
 }
 
-.string {
+#jsonview .string {
   color: green;
 }
 
-.collapser {
+#jsonview .collapser {
   position: absolute;
   left: -1em;
   cursor: pointer;
 }
 
-li {
+#jsonview li {
   position: relative;
 }
 
-li:after {
+#jsonview li:after {
   content: ',';
 }
 
-li:last-child:after {
+#jsonview li:last-child:after {
   content: '';
 }
 
-#error {
+#jsonview #error {
   -moz-border-radius: 8px;
   border: 1px solid #970000;
   background-color: #F7E8E8;
@@ -44,31 +49,17 @@ li:last-child:after {
   padding: .5em;
 }
 
-.errormessage {
+#jsonview .errormessage {
   font-family: monospace;
 }
 
-#json {
-  font-family: monospace;
-  font-size: 1.1em;
-}
-
-ul {
+#jsonview ul {
   list-style: none;
   margin: 0 0 0 2em;
   padding: 0;
 }
 
-h1 {
+#jsonview h1 {
   font-size: 1.2em;
 }
 
-/* Indent JSON when there's a callback. */
-.callback + #json {
-  padding-left: 1em;
-}
-
-.callback {
-  font-family: monospace;
-  color: #A52A2A;
-}
