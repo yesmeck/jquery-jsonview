@@ -7,7 +7,17 @@
     <meta name="description" content="jQuery JSONView : Pretty JSON on your web - port of the Firefox extension." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <link rel="stylesheet" href="stylesheets/jquery.jsonview.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.jsonview.js"></script>
+    <script type="text/javascript">
+      var data = '{"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"}';
+      // As a object
+      //var data = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};
+      $(function() {
+        $("#data").JSONView(data);
+      });
+    </script>
     <title>jQuery JSONView</title>
   </head>
 
@@ -50,6 +60,9 @@
 <span class="p">});</span>
 </pre></div>
 
+<p><strong>Output:</strong></p>
+<div id="data"></div>
+
 <h2>Licence</h2>
 
 <p>MIT</p>
@@ -64,7 +77,7 @@
       </footer>
     </div>
 
-    
+
 
   </body>
 </html>
