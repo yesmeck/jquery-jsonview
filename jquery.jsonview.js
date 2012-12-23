@@ -1,4 +1,4 @@
-(function() {
+(function($) {
   // JSONFormatter json->HTML prototype straight from Firefox JSONView
   // For reference: http://code.google.com/p/jsonview
   function JSONFormatter() {
@@ -161,4 +161,4 @@
     }
   };
 
-})();
+})(jQuery);
