@@ -31,6 +31,7 @@
 
 #jsonview li {
   position: relative;
+  list-style-type: none;
 }
 
 #jsonview li:after {
