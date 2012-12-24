@@ -1,6 +1,5 @@
 #jsonview {
   font-family: monospace;
-  font-size: 1.1em;
 }
 
 #jsonview .prop {
@@ -31,6 +30,7 @@
 
 #jsonview li {
   position: relative;
+  list-style-type: none;
 }
 
 #jsonview li:after {
