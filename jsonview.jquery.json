@@ -3,8 +3,7 @@
   "title": "jQuery JSONView",
   "description": "jQuery plugin for display pretty JSON.",
   "keywords": [
-    "json",
-    "develop tool"
+    "json"
   ],
   "version": "0.1.0",
   "author": {
