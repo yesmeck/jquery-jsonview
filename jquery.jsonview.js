@@ -117,9 +117,7 @@
 
     var opts = $.extend(defaultOptions, options);
 
-    function collapse(evt) {
-      var collapser = evt.target;
-
+    function collapse(collapser) {
       var target = collapser.parentNode.getElementsByClassName('collapsible');
 
       if ( ! target.length ) {
@@ -153,15 +151,12 @@
       var collapser = document.createElement('div');
       collapser.className = 'collapser';
       collapser.innerHTML = opts.collapsed ? '+' : '-';
-      collapser.addEventListener('click', collapse, false);
+      collapser.addEventListener('click', function(event) {
+        collapse(event.target);
+      }, false);
       item.insertBefore(collapser, item.firstChild);
       if (opts.collapsed) {
-        var collapsible = item.getElementsByClassName('collapsible')[0];
-        collapsible.style.display = 'none';
-        var ellipsis = document.createElement('span');
-        ellipsis.className = 'ellipsis';
-        ellipsis.innerHTML = ' &hellip; ';
-        collapsible.parentNode.insertBefore(ellipsis, collapsible);
+        collapse(collapser);
       }
     }
 
