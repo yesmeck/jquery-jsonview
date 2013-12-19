@@ -12,10 +12,14 @@
     //var data = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};
     $(function() {
       $("#data").JSONView(data);
+      $("#data-collapsed").JSONView(data, {collapsed: true});
     });
   </script>
 </head>
 <body>
+  <h2>Data</h2>
   <div id="data"></div>
+  <h2>Data Collapsed</h2>
+  <div id="data-collapsed"></div>
 </body>
 </html>
