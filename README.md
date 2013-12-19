@@ -15,9 +15,21 @@ var data = '{"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": 
 
 $(function() {
   $("#data").JSONView(data);
+  // with options
+  // $("#data").JSONView(data, {collapsed: true});
 });
 ```
+
 [Demo](http://blog.yesmeck.com/jquery-jsonview/)
+
+
+## Options
+
+```javascript
+{
+  collapsed: false
+}
+```
 
 ## Licence
 
