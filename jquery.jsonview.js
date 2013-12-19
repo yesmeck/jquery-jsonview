@@ -109,7 +109,13 @@
 
   $.fn.JSONView = function(jsonObj, options) {
 
-    opts = options || {};
+    var defaultOptions = {
+      collapsed: false
+    }
+
+    options = options || {};
+
+    var opts = $.extend(defaultOptions, options);
 
     function collapse(evt) {
       var collapser = evt.target;
@@ -146,9 +152,17 @@
 
       var collapser = document.createElement('div');
       collapser.className = 'collapser';
-      collapser.innerHTML = '-';
+      collapser.innerHTML = opts.collapsed ? '+' : '-';
       collapser.addEventListener('click', collapse, false);
       item.insertBefore(collapser, item.firstChild);
+      if (opts.collapsed) {
+        var collapsible = item.getElementsByClassName('collapsible')[0];
+        collapsible.style.display = 'none';
+        var ellipsis = document.createElement('span');
+        ellipsis.className = 'ellipsis';
+        ellipsis.innerHTML = ' &hellip; ';
+        collapsible.parentNode.insertBefore(ellipsis, collapsible);
+      }
     }
 
     var jsonFormatter = new JSONFormatter;
@@ -163,12 +177,6 @@
     var items = $(this)[0].getElementsByClassName('collapsible');
     for( var i = 0; i < items.length; i++) {
       addCollapser(items[i].parentNode);
-    }
-
-    if(opts.collapsed) {
-      $(this).find('li ul.collapsible').each(function(index, el){
-        $(el).siblings().first().trigger('click');
-      });
     }
   };
 
