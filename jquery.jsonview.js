@@ -177,7 +177,7 @@
 
     var jsonFormatter = new JSONFormatter;
     // Covert, and catch exceptions on failure
-    if( Object.prototype.toString.call(jsonObj) !== '[object Object]' ) {
+    if( Object.prototype.toString.call(jsonObj) == '[object String]' ) {
       jsonObj = JSON.parse(jsonObj);
     }
     var outputDoc = jsonFormatter.jsonToHTML(jsonObj);
