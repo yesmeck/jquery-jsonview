@@ -1,5 +1,7 @@
 #jsonview {
   font-family: monospace;
+  font-size: 1.1em;
+  white-space: pre-wrap;
 }
 
 #jsonview .prop {
@@ -20,6 +22,7 @@
 
 #jsonview .string {
   color: green;
+  white-space: pre-wrap;
 }
 
 #jsonview .collapser {
@@ -28,29 +31,37 @@
   cursor: pointer;
 }
 
+#jsonview .collapsible {
+  transition: height 1.2s;
+  transition: width 1.2s;
+}
+
+#jsonview .collapsible.collapsed {
+  height: .8em;
+  width: 1em;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
+}
+
+#jsonview .collapsible.collapsed:before {
+  content: "…";
+  width: 1em;
+  margin-left: .2em;
+}
+
+#jsonview .collapser.collapsed {
+  transform: rotate(0deg);
+}
+
+#jsonview .q {
+  display: inline-block;
+  width: 0px;
+  color: transparent;
+}
+
 #jsonview li {
   position: relative;
-  list-style-type: none;
-}
-
-#jsonview li:after {
-  content: ',';
-}
-
-#jsonview li:last-child:after {
-  content: '';
-}
-
-#jsonview #error {
-  -moz-border-radius: 8px;
-  border: 1px solid #970000;
-  background-color: #F7E8E8;
-  margin: .5em;
-  padding: .5em;
-}
-
-#jsonview .errormessage {
-  font-family: monospace;
 }
 
 #jsonview ul {
