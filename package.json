@@ -28,7 +28,8 @@
     "gulp-ruby-sass": "^0.4.0",
     "gulp-concat": "^2.2.0",
     "gulp-mocha": "^0.4.1",
-    "gulp-preprocess": "^1.0.1"
+    "gulp-preprocess": "^1.0.1",
+    "gulp-git": "^0.3.6"
   },
   "jqueryJSON": {
     "title": "jQuery JSONView",
