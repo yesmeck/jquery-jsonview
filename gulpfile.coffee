@@ -4,6 +4,7 @@ gutil = require 'gulp-util'
 sass = require 'gulp-ruby-sass'
 concat = require 'gulp-concat'
 mocha = require 'gulp-mocha'
+preprocess = require 'gulp-preprocess'
 
 gulp.task 'default', ['mocha']
 
@@ -22,6 +23,10 @@ gulp.task 'dist', ->
     .pipe(sass())
     .pipe(gulp.dest('dist'))
 
+  gulp.src('src/index.html')
+    .pipe(preprocess(context: { dist: true }))
+    .pipe(gulp.dest('dist'))
+
 gulp.task 'build', ->
   gulp.src('src/**/*.coffee')
     .pipe(coffee(bare: true))
@@ -31,6 +36,10 @@ gulp.task 'build', ->
     .pipe(sass())
     .pipe(gulp.dest('build'))
 
+  gulp.src('src/index.html')
+    .pipe(preprocess(context: { dist: false }))
+    .pipe(gulp.dest('build'))
+
 
 gulp.task 'watch', ->
-  gulp.watch('src/**/*', ['build', 'mocha'])
+  gulp.watch('src/**/*', ['build', 'dist', 'mocha'])

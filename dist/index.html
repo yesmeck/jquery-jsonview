@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JQuery JSONView</title>
+  <link rel="stylesheet" href="jquery.jsonview.css" />
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="jquery.jsonview.js"></script>
+  <script type="text/javascript">
+    var data = '{"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"}';
+    // As a object
+    //var data = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};
+    $(function() {
+      $("#data").JSONView(data);
+      $("#data-collapsed").JSONView(data, {collapsed: true});
+    });
+  </script>
+</head>
+<body>
+  <h2>Data</h2>
+  <div id="data"></div>
+  <h2>Data Collapsed</h2>
+  <div id="data-collapsed"></div>
+</body>
+</html>

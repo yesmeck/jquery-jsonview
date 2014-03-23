@@ -1,3 +1,50 @@
+var Collapser;
+
+Collapser = (function() {
+  function Collapser(item, collapsed) {
+    var collapser;
+    collapser = document.createElement('div');
+    collapser.className = 'collapser';
+    collapser.innerHTML = collapsed ? '+' : '-';
+    collapser.addEventListener('click', ((function(_this) {
+      return function(event) {
+        return _this.collapse(event.target);
+      };
+    })(this)), false);
+    item.insertBefore(collapser, item.firstChild);
+    if (collapsed) {
+      this.collapse(collapser);
+    }
+  }
+
+  Collapser.prototype.collapse = function(collapser) {
+    var ellipsis, target;
+    target = collapser.parentNode.getElementsByClassName('collapsible');
+    if (!target.length) {
+      return;
+    }
+    target = target[0];
+    if (target.style.display === 'none') {
+      ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
+      target.parentNode.removeChild(ellipsis);
+      target.style.display = '';
+      return collapser.innerHTML = '-';
+    } else {
+      target.style.display = 'none';
+      ellipsis = document.createElement('span');
+      ellipsis.className = 'ellipsis';
+      ellipsis.innerHTML = ' &hellip; ';
+      target.parentNode.insertBefore(ellipsis, target);
+      return collapser.innerHTML = '+';
+    }
+  };
+
+  return Collapser;
+
+})();
+
+(typeof module !== "undefined" && module !== null) && (module.exports = Collapser);
+
 var JSONFormatter;
 
 JSONFormatter = (function() {
@@ -104,52 +151,17 @@ JSONFormatter = (function() {
 (typeof module !== "undefined" && module !== null) && (module.exports = new JSONFormatter);
 
 (function(jQuery) {
-  return jQuery.fn.JSONView = function(json, opttions) {
-    var addCollapser, collapse, defaultOptions, formatter, item, items, options, outputDoc, _i, _len, _results;
-    if (opttions == null) {
-      opttions = {};
+  var $;
+  $ = jQuery;
+  return $.fn.JSONView = function(json, options) {
+    var defaultOptions, formatter, item, items, outputDoc, _i, _len, _results;
+    if (options == null) {
+      options = {};
     }
     defaultOptions = {
       collapsed: false
     };
     options = $.extend(defaultOptions, options);
-    collapse = function(collapser) {
-      var ellipsis, target;
-      target = collapser.parentNode.getElementsByClassName('collapsible');
-      if (!target.length) {
-        return;
-      }
-      target = target[0];
-      if (target.style.display === 'none') {
-        ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
-        target.parentNode.removeChild(ellipsis);
-        target.style.display = '';
-        return collapser.innerHTML = '-';
-      } else {
-        target.style.display = 'none';
-        ellipsis = document.createElement('span');
-        ellipsis.className = 'ellipsis';
-        ellipsis.innerHTML = ' &hellip; ';
-        target.parentNode.insertBefore(ellipsis, target);
-        return collapser.innerHTML = '+';
-      }
-    };
-    addCollapser = function(item) {
-      var collapser;
-      if (item.nodeName !== 'LI') {
-        return;
-      }
-      collapser = document.createElement('div');
-      collapser.className = 'collapser';
-      collapser.innerHTML = opttions.collapsed ? '+' : '-';
-      collapser.addEventListener('click', (function(event) {
-        return collapse(event.target);
-      }), false);
-      item.insertBefore(collapser, item.firstChild);
-      if (opttions.collapsed) {
-        return collapse(collapser);
-      }
-    };
     formatter = new JSONFormatter;
     if (Object.prototype.toString.call(json) === '[object String]') {
       json = JSON.parse(json);
@@ -160,7 +172,11 @@ JSONFormatter = (function() {
     _results = [];
     for (_i = 0, _len = items.length; _i < _len; _i++) {
       item = items[_i];
-      _results.push(addCollapser(item.parentNode));
+      if (item.parentNode.nodeName === 'LI') {
+        _results.push(new Collapser(item.parentNode, options.collapsed));
+      } else {
+        _results.push(void 0);
+      }
     }
     return _results;
   };
