@@ -89,7 +89,7 @@ class JSONFormatter
   #Convert a whole JSON object into a formatted HTML document.
   jsonToHTML: (json) ->
     """
-    <div id="jsonview">#{@valueToHTML(json)}</div>
+    <div class="jsonview">#{@valueToHTML(json)}</div>
     """
 
 module? && module.exports = new JSONFormatter

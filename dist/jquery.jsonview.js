@@ -141,7 +141,7 @@ JSONFormatter = (function() {
   };
 
   JSONFormatter.prototype.jsonToHTML = function(json) {
-    return "<div id=\"jsonview\">" + (this.valueToHTML(json)) + "</div>";
+    return "<div class=\"jsonview\">" + (this.valueToHTML(json)) + "</div>";
   };
 
   return JSONFormatter;
