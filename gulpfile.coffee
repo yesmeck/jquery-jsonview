@@ -5,6 +5,7 @@ sass = require 'gulp-ruby-sass'
 concat = require 'gulp-concat'
 mocha = require 'gulp-mocha'
 preprocess = require 'gulp-preprocess'
+exec = require 'gulp-exec'
 fs = require 'fs'
 
 gulp.task 'default', ['mocha']
@@ -45,31 +46,37 @@ gulp.task 'watch', ->
   gulp.watch('src/**/*', ['build', 'dist', 'mocha'])
 
 gulp.task 'package', ->
-  src = 'package.json'
-  fs.readFile 'package.json', 'utf8', (error, data) ->
-    pkg = JSON.parse(data)
-    # jquery.json
-    json1 =
-      name: pkg.name,
-      description: pkg.description,
-      version: pkg.version,
-      author: pkg.author,
-      keywords: pkg.keywords,
-      homepage: pkg.homepage
-    json2 = pkg.jqueryJSON
-    json1[key] = json2[key] for key of json2
-    fs.writeFile 'jsonview.jquery.json', JSON.stringify(json1, null, 2)
+  data = fs.readFileSync 'package.json', 'utf8'
+  pkg = JSON.parse(data)
+  # jquery.json
+  json1 =
+    name: pkg.name,
+    description: pkg.description,
+    version: pkg.version,
+    author: pkg.author,
+    keywords: pkg.keywords,
+    homepage: pkg.homepage
+  json2 = pkg.jqueryJSON
+  json1[key] = json2[key] for key of json2
+  fs.writeFile 'jsonview.jquery.json', JSON.stringify(json1, null, 2)
 
-    # bower.json
-    json1 =
-      name: pkg.name,
-      description: pkg.description,
-      version: pkg.version,
-      main: pkg.main
-      keywords: pkg.keywords,
-      license: pkg.license,
-      homepage: pkg.homepage
-    json2 = pkg.bowerJSON
-    json1[key] = json2[key] for key of json2
-    fs.writeFile 'bower.json', JSON.stringify(json1, null, 2)
+  # bower.json
+  json1 =
+    name: pkg.name,
+    description: pkg.description,
+    version: pkg.version,
+    main: pkg.main
+    keywords: pkg.keywords,
+    license: pkg.license,
+    homepage: pkg.homepage
+  json2 = pkg.bowerJSON
+  json1[key] = json2[key] for key of json2
+  fs.writeFile 'bower.json', JSON.stringify(json1, null, 2)
+
+gulp.task 'release', ['dist', 'package'], ->
+  data = fs.readFileSync 'package.json', 'utf8'
+  pkg = JSON.parse(data)
+  exec "git tag v<%= pkg.version %>"
+  exec 'git push origin master --tags'
+  exec 'npm publish'
 
