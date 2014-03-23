@@ -1,18 +1,17 @@
 {
-  "name": "jquery-jsonview",
-  "version": "1.0.0",
-  "homepage": "https://github.com/yesmeck/jquery-jsonview",
-  "authors": [
-    "Meck <yesmeck@gmail.com>"
-  ],
+  "name": "jsonview",
   "description": "jQuery plugin for display pretty JSON.",
-  "main": "jquery.jsonview.js",
+  "version": "1.0.0",
+  "main": "dist/jquery.jsonview.js",
   "keywords": [
     "json"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/yesmeck/jquery-jsonview",
+  "authors": [
+    "Meck <yesmeck@gmail.com>"
+  ],
   "ignore": [
-    "**/.*",
     "node_modules",
     "bower_components",
     "test",
