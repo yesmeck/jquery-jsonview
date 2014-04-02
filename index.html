@@ -7,28 +7,13 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://rawgithub.com/yesmeck/jquery-jsonview/master/dist/jquery.jsonview.css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script type="text/javascript" src="https://rawgithub.com/yesmeck/jquery-jsonview/master/dist/jquery.jsonview.js"></script>
     <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <script type="text/javascript">
-      // View a json format string
-      var data = '{"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"}';
-
-      // Or view a object
-      // var data = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};
-
-      $(function() {
-        $("#data").JSONView(data);
-        // with options
-        // $("#data").JSONView(data, {collapsed: true});
-      });
-    </script>
   </head>
   <body>
     <div class="wrapper">
@@ -51,24 +36,9 @@
 <p>Port of Ben Hollis's JSONView extension for Firefox: <a href="http://jsonview.com">http://jsonview.com</a></p>
 
 <h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a name="usage" class="anchor" href="#live-demo"><span class="octicon octicon-link"></span></a>Live demo</h2>
 
-<div class="highlight highlight-javascript"><pre><span class="c1">// View a json format string</span>
-<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="s1">'{"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr&lt;h1&gt;ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"}'</span><span class="p">;</span>
-
-<span class="c1">// Or view a object</span>
-<span class="c1">// var data = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr&lt;h1&gt;ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};</span>
-
-<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">$</span><span class="p">(</span><span class="s2">"#data"</span><span class="p">).</span><span class="nx">JSONView</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-  <span class="c1">// with options</span>
-  <span class="c1">// $("#data").JSONView(data, {collapsed: true});</span>
-<span class="p">});</span>
-</pre></div>
-
-<div id="data">
-
-</div>
+<a class="jsbin-embed" href="http://jsbin.com/bacet/1/embed?output&height=450px">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script>
 
 <h2>
 <a name="licence" class="anchor" href="#licence"><span class="octicon octicon-link"></span></a>Licence</h2>
