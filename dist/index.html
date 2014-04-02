@@ -13,11 +13,31 @@
     $(function() {
       $("#data").JSONView(data);
       $("#data-collapsed").JSONView(data, {collapsed: true});
+      $('#collapse-btn').on('click', function() {
+        $('#data').JSONView('collapse');
+      });
+      $('#expand-btn').on('click', function() {
+        $('#data').JSONView('expand');
+      });
+      $('#toggle-btn').on('click', function() {
+        $('#data').JSONView('toggle');
+      });
+      $('#toggle-level1-btn').on('click', function() {
+        $('#data').JSONView('toggle', 1);
+      });
+      $('#toggle-level2-btn').on('click', function() {
+        $('#data').JSONView('toggle', 2);
+      });
     });
   </script>
 </head>
 <body>
   <h2>Data</h2>
+  <button id="collapse-btn">Collapse</button>
+  <button id="expand-btn">Expand</button>
+  <button id="toggle-btn">Toggle</button>
+  <button id="toggle-level1-btn">Toggle level1</button>
+  <button id="toggle-level2-btn">Toggle level2</button>
   <div id="data"></div>
   <h2>Data Collapsed</h2>
   <div id="data-collapsed"></div>

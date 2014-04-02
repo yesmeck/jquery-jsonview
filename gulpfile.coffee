@@ -43,7 +43,7 @@ gulp.task 'build', ->
     .pipe(gulp.dest('build'))
 
 gulp.task 'watch', ->
-  gulp.watch('src/**/*', ['build', 'dist', 'mocha'])
+  gulp.watch(['src/**/*', 'test/**/*'], ['build', 'dist', 'mocha'])
 
 gulp.task 'package', ->
   data = fs.readFileSync 'package.json', 'utf8'

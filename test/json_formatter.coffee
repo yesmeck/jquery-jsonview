@@ -1,5 +1,8 @@
 formatter = require '../src/lib/json_formatter.coffee'
 
+minify = (str) ->
+  str.replace(/(^\s*|\n)/gm, '')
+
 suite 'JSONFormatter', ->
 
   suite '#htmlEncode', ->
@@ -31,8 +34,10 @@ suite 'JSONFormatter', ->
     test 'http url', ->
       assert.equal(
         formatter.stringToHTML('http://yesmeck.com'),
-        """
-        <a href="http://yesmeck.com"><span class="q">"</span>http://yesmeck.com<span class="q">"</span></a>
+        minify """
+        <a href="http://yesmeck.com">
+          <span class="q">"</span>http://yesmeck.com<span class="q">"</span>
+        </a>
         """
       )
 
@@ -42,14 +47,53 @@ suite 'JSONFormatter', ->
   test '#arrayToHTML', ->
     assert.equal(
       formatter.valueToHTML([1]),
-      '<span class="collapser"></span>[<ul class="array collapsible"><li><span class="num">1</span></li></ul>]'
+      minify """
+      <span class="collapser"></span>[
+        <ul class="array level0">
+          <li><span class="num">1</span></li>
+        </ul>
+      ]
+      """
     )
 
   test '#objectToHTML', ->
     assert.equal(
       formatter.objectToHTML({a: 1}),
+      minify """
+      <span class="collapser"></span>{
+        <ul class="obj level0">
+          <li>
+            <span class="prop">
+              <span class="q">"</span>a<span class="q">"</span>
+            </span>: <span class="num">1</span>
+          </li>
+        </ul>
+      }
       """
-      <span class="collapser"></span>{<ul class="obj collapsible"><li><span class="prop"><span class="q">"</span>a<span class="q">"</span></span>: <span class="num">1</span></li></ul>}
+    )
+
+
+  test 'keychain', ->
+    assert.equal(
+      formatter.objectToHTML({a: {b: 1}}),
+      minify """
+      <span class="collapser"></span>{
+        <ul class="obj level0">
+          <li>
+            <span class="prop">
+              <span class="q">"</span>a<span class="q">"</span>
+            </span>: <span class="collapser"></span>{
+              <ul id="jsonview[a]" class="obj level1 collapsible">
+                <li>
+                  <span class="prop">
+                    <span class="q">"</span>b<span class="q">"</span>
+                  </span>: <span class="num">1</span>
+                </li>
+              </ul>
+            }
+          </li>
+        </ul>
+      }
       """
     )
 

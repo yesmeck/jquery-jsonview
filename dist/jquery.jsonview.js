@@ -20,10 +20,16 @@
       return "<span class=\"" + className + "\">" + (this.htmlEncode(value)) + "</span>";
     };
 
-    JSONFormatter.prototype.valueToHTML = function(value) {
+    JSONFormatter.prototype.valueToHTML = function(value, keychain, level) {
       var valueType;
+      if (keychain == null) {
+        keychain = '';
+      }
+      if (level == null) {
+        level = 0;
+      }
       valueType = Object.prototype.toString.call(value).match(/\s(.+)]/)[1].toLowerCase();
-      return this["" + valueType + "ToHTML"].call(this, value);
+      return this["" + valueType + "ToHTML"].call(this, value, keychain, level);
     };
 
     JSONFormatter.prototype.nullToHTML = function(value) {
@@ -46,15 +52,21 @@
       return this.decorateWithSpan(value, 'bool');
     };
 
-    JSONFormatter.prototype.arrayToHTML = function(array) {
-      var hasContents, numProps, output, value, _i, _len;
+    JSONFormatter.prototype.arrayToHTML = function(array, keychain, level) {
+      var collapsible, hasContents, id, index, numProps, output, value, _i, _len;
+      if (keychain == null) {
+        keychain = '';
+      }
+      if (level == null) {
+        level = 0;
+      }
       hasContents = false;
       output = '';
       numProps = array.length;
-      for (_i = 0, _len = array.length; _i < _len; _i++) {
-        value = array[_i];
+      for (index = _i = 0, _len = array.length; _i < _len; index = ++_i) {
+        value = array[index];
         hasContents = true;
-        output += '<li>' + this.valueToHTML(value);
+        output += '<li>' + this.valueToHTML(value, "" + keychain + "[" + index + "]", level + 1);
         if (numProps > 1) {
           output += ',';
         }
@@ -62,14 +74,26 @@
         numProps--;
       }
       if (hasContents) {
-        return "<span class=\"collapser\"></span>[<ul class=\"array collapsible\">" + output + "</ul>]";
+        if (keychain !== '') {
+          id = " id=\"jsonview" + keychain + "\"";
+          collapsible = ' collapsible';
+        } else {
+          id = collapsible = '';
+        }
+        return "<span class=\"collapser\"></span>[<ul" + id + " class=\"array level" + level + collapsible + "\">" + output + "</ul>]";
       } else {
         return '[ ]';
       }
     };
 
-    JSONFormatter.prototype.objectToHTML = function(object) {
-      var hasContents, numProps, output, prop, value;
+    JSONFormatter.prototype.objectToHTML = function(object, keychain, level) {
+      var collapsible, hasContents, id, numProps, output, prop, value;
+      if (keychain == null) {
+        keychain = '';
+      }
+      if (level == null) {
+        level = 0;
+      }
       hasContents = false;
       output = '';
       numProps = 0;
@@ -79,7 +103,7 @@
       for (prop in object) {
         value = object[prop];
         hasContents = true;
-        output += "<li><span class=\"prop\"><span class=\"q\">\"</span>" + (this.jsString(prop)) + "<span class=\"q\">\"</span></span>: " + (this.valueToHTML(value));
+        output += "<li><span class=\"prop\"><span class=\"q\">\"</span>" + (this.jsString(prop)) + "<span class=\"q\">\"</span></span>: " + (this.valueToHTML(value, "" + keychain + "[" + prop + "]", level + 1));
         if (numProps > 1) {
           output += ',';
         }
@@ -87,7 +111,13 @@
         numProps--;
       }
       if (hasContents) {
-        return "<span class=\"collapser\"></span>{<ul class=\"obj collapsible\">" + output + "</ul>}";
+        if (keychain !== '') {
+          id = " id=\"jsonview" + keychain + "\"";
+          collapsible = ' collapsible';
+        } else {
+          id = collapsible = '';
+        }
+        return "<span class=\"collapser\"></span>{<ul" + id + " class=\"obj level" + level + collapsible + "\">" + output + "</ul>}";
       } else {
         return '{ }';
       }
@@ -145,31 +175,59 @@
   })();
   (typeof module !== "undefined" && module !== null) && (module.exports = Collapser);
   $ = jQuery;
-  return $.fn.JSONView = function(json, options) {
-    var defaultOptions, formatter, item, items, outputDoc, _i, _len, _results;
-    if (options == null) {
-      options = {};
-    }
-    defaultOptions = {
-      collapsed: false
+  return $.fn.JSONView = function() {
+    var METHODS, args, defaultOptions, formatter, json, method, options, outputDoc;
+    METHODS = {
+      collapse: 'hide',
+      expand: 'show',
+      toggle: 'toggle'
     };
-    options = $.extend(defaultOptions, options);
-    formatter = new JSONFormatter;
-    if (Object.prototype.toString.call(json) === '[object String]') {
-      json = JSON.parse(json);
-    }
-    outputDoc = formatter.jsonToHTML(json);
-    $(this).html(outputDoc);
-    items = $(this)[0].getElementsByClassName('collapsible');
-    _results = [];
-    for (_i = 0, _len = items.length; _i < _len; _i++) {
-      item = items[_i];
-      if (item.parentNode.nodeName === 'LI') {
-        _results.push(new Collapser(item.parentNode, options.collapsed));
-      } else {
-        _results.push(void 0);
+    args = arguments;
+    if (METHODS[args[0]] != null) {
+      method = METHODS[args[0]];
+      return this.each(function() {
+        var $this, keychain, level;
+        $this = $(this);
+        if (args[1] != null) {
+          if (Object.prototype.toString.call(args[1]) === '[object Number]') {
+            level = args[1];
+            return $this.find(".jsonview .level" + level)[method]();
+          } else {
+            keychain = args[1];
+            return $this.find(".jsonview #jsonview" + keychain)[method]();
+          }
+        } else {
+          return $this.find('.jsonview > ul > li > .collapsible')[method]();
+        }
+      });
+    } else {
+      json = args[0];
+      options = args[1] || {};
+      defaultOptions = {
+        collapsed: false
+      };
+      options = $.extend(defaultOptions, options);
+      formatter = new JSONFormatter;
+      if (Object.prototype.toString.call(json) === '[object String]') {
+        json = JSON.parse(json);
       }
+      outputDoc = formatter.jsonToHTML(json);
+      return this.each(function() {
+        var $this, item, items, _i, _len, _results;
+        $this = $(this);
+        $this.html(outputDoc);
+        items = $this[0].getElementsByClassName('collapsible');
+        _results = [];
+        for (_i = 0, _len = items.length; _i < _len; _i++) {
+          item = items[_i];
+          if (item.parentNode.nodeName === 'LI') {
+            _results.push(new Collapser(item.parentNode, options.collapsed));
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
+      });
     }
-    return _results;
   };
 })(jQuery);
