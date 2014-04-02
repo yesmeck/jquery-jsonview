@@ -17,16 +17,11 @@ do (jQuery) ->
       @each ->
         $this = $(this)
         if args[1]?
-          if Object.prototype.toString.call(args[1]) == '[object Number]'
-            # collapse/expand by node level
-            level = args[1]
-            $this.find(".jsonview .level#{level}")[method]()
-          else
-            # collapse/extend by keychain
-            keychain = args[1]
-            $this.find(".jsonview #jsonview#{keychain}")[method]()
+          # collapse/expand by node level
+          level = args[1]
+          $this.find(".jsonview .level#{level}")[method]()
         else
-          # no key/level specify? collapse/expand all!
+          # no level specify? collapse/expand all!
           $this.find('.jsonview > ul > li > .collapsible')[method]()
 
     else

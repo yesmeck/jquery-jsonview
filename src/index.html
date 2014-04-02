@@ -11,26 +11,44 @@
   <!-- @endif -->
   <script type="text/javascript" src="jquery.jsonview.js"></script>
   <script type="text/javascript">
-    var data = '{"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"}';
-    // As a object
-    //var data = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};
+    var json = {
+      "hey": "guy",
+      "anumber": 243,
+      "anobject": {
+        "whoa": "nuts",
+        "anarray": [1, 2, "thr<h1>ee"],
+        "more":"stuff"
+      },
+      "awesome": true,
+      "bogus": false,
+      "meaning": null,
+      "japanese":"明日がある。",
+      "link": "http://jsonview.com",
+      "notLink": "http://jsonview.com is great",
+    };
     $(function() {
-      $("#data").JSONView(data);
-      $("#data-collapsed").JSONView(data, {collapsed: true});
+      $("#json").JSONView(json);
+
+      $("#json-collapsed").JSONView(json, {collapsed: true});
+
       $('#collapse-btn').on('click', function() {
-        $('#data').JSONView('collapse');
+        $('#json').JSONView('collapse');
       });
+
       $('#expand-btn').on('click', function() {
-        $('#data').JSONView('expand');
+        $('#json').JSONView('expand');
       });
+
       $('#toggle-btn').on('click', function() {
-        $('#data').JSONView('toggle');
+        $('#json').JSONView('toggle');
       });
+
       $('#toggle-level1-btn').on('click', function() {
-        $('#data').JSONView('toggle', 1);
+        $('#json').JSONView('toggle', 1);
       });
+
       $('#toggle-level2-btn').on('click', function() {
-        $('#data').JSONView('toggle', 2);
+        $('#json').JSONView('toggle', 2);
       });
     });
   </script>
@@ -42,8 +60,8 @@
   <button id="toggle-btn">Toggle</button>
   <button id="toggle-level1-btn">Toggle level1</button>
   <button id="toggle-level2-btn">Toggle level2</button>
-  <div id="data"></div>
+  <div id="json"></div>
   <h2>Data Collapsed</h2>
-  <div id="data-collapsed"></div>
+  <div id="json-collapsed"></div>
 </body>
 </html>

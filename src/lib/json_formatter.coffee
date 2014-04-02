@@ -20,9 +20,9 @@ class JSONFormatter
     """
 
   # Convert a basic JSON datatype (number, string, boolean, null, object, array) into an HTML fragment.
-  valueToHTML: (value, keychain = '', level = 0) ->
+  valueToHTML: (value, level = 0) ->
     valueType = Object.prototype.toString.call(value).match(/\s(.+)]/)[1].toLowerCase()
-    @["#{valueType}ToHTML"].call(this, value, keychain, level)
+    @["#{valueType}ToHTML"].call(this, value, level)
 
   nullToHTML: (value) ->
     @decorateWithSpan('null', 'null')
@@ -44,31 +44,27 @@ class JSONFormatter
     @decorateWithSpan(value, 'bool')
 
   # Convert an array into an HTML fragment
-  arrayToHTML: (array, keychain = '', level = 0) ->
+  arrayToHTML: (array, level = 0) ->
     hasContents = false
     output = ''
     numProps = array.length
     for value, index in array
       hasContents = true
-      output += '<li>' + @valueToHTML(value, "#{keychain}[#{index}]", level + 1)
+      output += '<li>' + @valueToHTML(value, level + 1)
       output += ',' if  numProps > 1
       output += '</li>'
       numProps--
 
     if ( hasContents )
-      if keychain != ''
-        id = " id=\"jsonview#{keychain}\""
-        collapsible = ' collapsible'
-      else
-        id = collapsible = ''
+      collapsible = if level == 0 then '' else ' collapsible'
       """
-        <span class="collapser"></span>[<ul#{id} class="array level#{level}#{collapsible}">#{output}</ul>]
+        <span class="collapser"></span>[<ul class="array level#{level}#{collapsible}">#{output}</ul>]
       """
     else
       '[ ]'
 
   # Convert a JSON object to an HTML fragment
-  objectToHTML: (object, keychain = '', level = 0) ->
+  objectToHTML: (object, level = 0) ->
     hasContents = false
     output = ''
     numProps = 0
@@ -78,19 +74,15 @@ class JSONFormatter
     for prop, value of object
       hasContents = true
       output += """
-      <li><span class="prop"><span class="q">"</span>#{@jsString(prop)}<span class="q">"</span></span>: #{@valueToHTML(value, "#{keychain}[#{prop}]", level + 1)}
+      <li><span class="prop"><span class="q">"</span>#{@jsString(prop)}<span class="q">"</span></span>: #{@valueToHTML(value, level + 1)}
       """
       output += ',' if numProps > 1
       output += '</li>'
       numProps--
     if hasContents
-      if keychain != ''
-        id = " id=\"jsonview#{keychain}\""
-        collapsible = ' collapsible'
-      else
-        id = collapsible = ''
+      collapsible = if level == 0 then '' else ' collapsible'
       """
-      <span class="collapser"></span>{<ul#{id} class="obj level#{level}#{collapsible}">#{output}</ul>}
+      <span class="collapser"></span>{<ul class="obj level#{level}#{collapsible}">#{output}</ul>}
       """
     else
       '{ }'

@@ -73,7 +73,7 @@ suite 'JSONFormatter', ->
     )
 
 
-  test 'keychain', ->
+  test 'level', ->
     assert.equal(
       formatter.objectToHTML({a: {b: 1}}),
       minify """
@@ -83,7 +83,7 @@ suite 'JSONFormatter', ->
             <span class="prop">
               <span class="q">"</span>a<span class="q">"</span>
             </span>: <span class="collapser"></span>{
-              <ul id="jsonview[a]" class="obj level1 collapsible">
+              <ul class="obj level1 collapsible">
                 <li>
                   <span class="prop">
                     <span class="q">"</span>b<span class="q">"</span>

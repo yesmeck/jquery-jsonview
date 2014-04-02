@@ -20,16 +20,13 @@
       return "<span class=\"" + className + "\">" + (this.htmlEncode(value)) + "</span>";
     };
 
-    JSONFormatter.prototype.valueToHTML = function(value, keychain, level) {
+    JSONFormatter.prototype.valueToHTML = function(value, level) {
       var valueType;
-      if (keychain == null) {
-        keychain = '';
-      }
       if (level == null) {
         level = 0;
       }
       valueType = Object.prototype.toString.call(value).match(/\s(.+)]/)[1].toLowerCase();
-      return this["" + valueType + "ToHTML"].call(this, value, keychain, level);
+      return this["" + valueType + "ToHTML"].call(this, value, level);
     };
 
     JSONFormatter.prototype.nullToHTML = function(value) {
@@ -52,11 +49,8 @@
       return this.decorateWithSpan(value, 'bool');
     };
 
-    JSONFormatter.prototype.arrayToHTML = function(array, keychain, level) {
-      var collapsible, hasContents, id, index, numProps, output, value, _i, _len;
-      if (keychain == null) {
-        keychain = '';
-      }
+    JSONFormatter.prototype.arrayToHTML = function(array, level) {
+      var collapsible, hasContents, index, numProps, output, value, _i, _len;
       if (level == null) {
         level = 0;
       }
@@ -66,7 +60,7 @@
       for (index = _i = 0, _len = array.length; _i < _len; index = ++_i) {
         value = array[index];
         hasContents = true;
-        output += '<li>' + this.valueToHTML(value, "" + keychain + "[" + index + "]", level + 1);
+        output += '<li>' + this.valueToHTML(value, level + 1);
         if (numProps > 1) {
           output += ',';
         }
@@ -74,23 +68,15 @@
         numProps--;
       }
       if (hasContents) {
-        if (keychain !== '') {
-          id = " id=\"jsonview" + keychain + "\"";
-          collapsible = ' collapsible';
-        } else {
-          id = collapsible = '';
-        }
-        return "<span class=\"collapser\"></span>[<ul" + id + " class=\"array level" + level + collapsible + "\">" + output + "</ul>]";
+        collapsible = level === 0 ? '' : ' collapsible';
+        return "<span class=\"collapser\"></span>[<ul class=\"array level" + level + collapsible + "\">" + output + "</ul>]";
       } else {
         return '[ ]';
       }
     };
 
-    JSONFormatter.prototype.objectToHTML = function(object, keychain, level) {
-      var collapsible, hasContents, id, numProps, output, prop, value;
-      if (keychain == null) {
-        keychain = '';
-      }
+    JSONFormatter.prototype.objectToHTML = function(object, level) {
+      var collapsible, hasContents, numProps, output, prop, value;
       if (level == null) {
         level = 0;
       }
@@ -103,7 +89,7 @@
       for (prop in object) {
         value = object[prop];
         hasContents = true;
-        output += "<li><span class=\"prop\"><span class=\"q\">\"</span>" + (this.jsString(prop)) + "<span class=\"q\">\"</span></span>: " + (this.valueToHTML(value, "" + keychain + "[" + prop + "]", level + 1));
+        output += "<li><span class=\"prop\"><span class=\"q\">\"</span>" + (this.jsString(prop)) + "<span class=\"q\">\"</span></span>: " + (this.valueToHTML(value, level + 1));
         if (numProps > 1) {
           output += ',';
         }
@@ -111,13 +97,8 @@
         numProps--;
       }
       if (hasContents) {
-        if (keychain !== '') {
-          id = " id=\"jsonview" + keychain + "\"";
-          collapsible = ' collapsible';
-        } else {
-          id = collapsible = '';
-        }
-        return "<span class=\"collapser\"></span>{<ul" + id + " class=\"obj level" + level + collapsible + "\">" + output + "</ul>}";
+        collapsible = level === 0 ? '' : ' collapsible';
+        return "<span class=\"collapser\"></span>{<ul class=\"obj level" + level + collapsible + "\">" + output + "</ul>}";
       } else {
         return '{ }';
       }
@@ -186,16 +167,11 @@
     if (METHODS[args[0]] != null) {
       method = METHODS[args[0]];
       return this.each(function() {
-        var $this, keychain, level;
+        var $this, level;
         $this = $(this);
         if (args[1] != null) {
-          if (Object.prototype.toString.call(args[1]) === '[object Number]') {
-            level = args[1];
-            return $this.find(".jsonview .level" + level)[method]();
-          } else {
-            keychain = args[1];
-            return $this.find(".jsonview #jsonview" + keychain)[method]();
-          }
+          level = args[1];
+          return $this.find(".jsonview .level" + level)[method]();
         } else {
           return $this.find('.jsonview > ul > li > .collapsible')[method]();
         }
