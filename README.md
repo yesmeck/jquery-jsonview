@@ -4,24 +4,19 @@ Formats & syntax highlights JSON.
 
 Port of Ben Hollis's JSONView extension for Firefox: http://jsonview.com
 
+[Live demo](http://blog.yesmeck.com/jquery-jsonview/)
+
 ## Usage
 
 ```javascript
-// View a json format string
-var data = '{"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"}';
-
-// Or view a object
-// var data = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};
+var json = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};
 
 $(function() {
-  $("#data").JSONView(data);
+  $("#json").JSONView(json);
   // with options
-  // $("#data").JSONView(data, {collapsed: true});
+  $("#json-collasped").JSONView(json, {collapsed: true});
 });
 ```
-
-[Demo](http://blog.yesmeck.com/jquery-jsonview/)
-
 
 ## Options
 
@@ -31,6 +26,22 @@ $(function() {
 }
 ```
 
+## Methods
+
+```javascript
+// collapse nodes
+$('#json').JSONView('collapse');
+
+// expand nodes
+$('#json').JSONView('expand');
+
+// toggle nodes
+$('#json').JSONView('toggle');
+
+// toggle by level1 nodes, also be supported in collapse and expand
+$('#josn').JSONView('toggle', 1)
+```
+
 ## Licence
 
-MIT
+[MIT](http://opensource.org/licenses/MIT)
