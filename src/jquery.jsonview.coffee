@@ -1,5 +1,10 @@
 do (jQuery) ->
+
+  # @include lib/json_formatter.coffee
+  # @include lib/collapser.coffee
+
   $ = jQuery
+
   $.fn.JSONView = (json, options = {}) ->
     defaultOptions =
       collapsed: false

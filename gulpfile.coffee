@@ -16,9 +16,9 @@ gulp.task 'mocha', ->
     .on('error', gutil.log)
 
 gulp.task 'dist', ->
-  gulp.src(['src/lib/*.coffee', 'src/*.coffee'])
+  gulp.src(['src/jquery.jsonview.coffee'])
+    .pipe(preprocess())
     .pipe(coffee(bare: true))
-    .pipe(concat('jquery.jsonview.js'))
     .pipe(gulp.dest('dist'))
 
   gulp.src('src/*.scss')
