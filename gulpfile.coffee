@@ -5,7 +5,6 @@ sass = require 'gulp-ruby-sass'
 concat = require 'gulp-concat'
 mocha = require 'gulp-mocha'
 preprocess = require 'gulp-preprocess'
-exec = require 'gulp-exec'
 fs = require 'fs'
 
 gulp.task 'default', ['mocha']
@@ -72,11 +71,4 @@ gulp.task 'package', ->
   json2 = pkg.bowerJSON
   json1[key] = json2[key] for key of json2
   fs.writeFile 'bower.json', JSON.stringify(json1, null, 2)
-
-gulp.task 'release', ['dist', 'package'], ->
-  data = fs.readFileSync 'package.json', 'utf8'
-  pkg = JSON.parse(data)
-  exec "git tag v<%= pkg.version %>"
-  exec 'git push origin master --tags'
-  exec 'npm publish'
 
