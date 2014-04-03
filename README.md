@@ -38,7 +38,7 @@ $('#json').JSONView('expand');
 // toggle nodes
 $('#json').JSONView('toggle');
 
-// toggle by level1 nodes, also be supported in collapse and expand
+// toggle level1 nodes, also be supported in collapse and expand
 $('#json').JSONView('toggle', 1)
 ```
 
