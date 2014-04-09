@@ -5,24 +5,33 @@ do (jQuery) ->
 
   $ = jQuery
 
-  $.fn.JSONView = ->
-    METHODS = { collapse: 'hide', expand: 'show', toggle: 'toggle' }
+  JSONView =
+    collapse: (el) ->
+      Collapser.collapse(el) if el.innerHTML == '-'
 
+    expand: (el) ->
+      Collapser.expand(el) if el.innerHTML == '+'
+
+    toggle: (el) ->
+      Collapser.toggle(el)
+
+  $.fn.JSONView = ->
     args = arguments
 
-    if METHODS[args[0]]?
+    if JSONView[args[0]]?
       # it's method call
-      method = METHODS[args[0]]
+      method = args[0]
 
       @each ->
         $this = $(this)
         if args[1]?
           # collapse/expand by node level
           level = args[1]
-          $this.find(".jsonview .level#{level}")[method]()
+          $this.find(".jsonview .collapsible.level#{level}").siblings('.collapser').each -> JSONView[method](this)
+
         else
           # no level specify? collapse/expand all!
-          $this.find('.jsonview > ul > li > .collapsible')[method]()
+          $this.find('.jsonview > ul > li > .collapsible').siblings('.collapser').each -> JSONView[method](this)
 
     else
       json = args[0]
@@ -46,5 +55,5 @@ do (jQuery) ->
         items = $this[0].getElementsByClassName('collapsible')
 
         for item in items
-          new Collapser(item.parentNode, options.collapsed) if item.parentNode.nodeName == 'LI'
+          Collapser.bindEvent(item.parentNode, options.collapsed) if item.parentNode.nodeName == 'LI'
 

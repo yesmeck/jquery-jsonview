@@ -58,7 +58,7 @@ class JSONFormatter
     if ( hasContents )
       collapsible = if level == 0 then '' else ' collapsible'
       """
-        <span class="collapser"></span>[<ul class="array level#{level}#{collapsible}">#{output}</ul>]
+        [<ul class="array level#{level}#{collapsible}">#{output}</ul>]
       """
     else
       '[ ]'
@@ -82,7 +82,7 @@ class JSONFormatter
     if hasContents
       collapsible = if level == 0 then '' else ' collapsible'
       """
-      <span class="collapser"></span>{<ul class="obj level#{level}#{collapsible}">#{output}</ul>}
+        {<ul class="obj level#{level}#{collapsible}">#{output}</ul>}
       """
     else
       '{ }'

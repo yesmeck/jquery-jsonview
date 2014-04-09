@@ -1,5 +1,5 @@
 (function(jQuery) {
-  var $, Collapser, JSONFormatter;
+  var $, Collapser, JSONFormatter, JSONView;
   JSONFormatter = (function() {
     function JSONFormatter() {}
 
@@ -69,7 +69,7 @@
       }
       if (hasContents) {
         collapsible = level === 0 ? '' : ' collapsible';
-        return "<span class=\"collapser\"></span>[<ul class=\"array level" + level + collapsible + "\">" + output + "</ul>]";
+        return "[<ul class=\"array level" + level + collapsible + "\">" + output + "</ul>]";
       } else {
         return '[ ]';
       }
@@ -98,7 +98,7 @@
       }
       if (hasContents) {
         collapsible = level === 0 ? '' : ' collapsible';
-        return "<span class=\"collapser\"></span>{<ul class=\"obj level" + level + collapsible + "\">" + output + "</ul>}";
+        return "{<ul class=\"obj level" + level + collapsible + "\">" + output + "</ul>}";
       } else {
         return '{ }';
       }
@@ -112,68 +112,91 @@
 
   })();
   (typeof module !== "undefined" && module !== null) && (module.exports = new JSONFormatter);
-  Collapser = (function() {
-    function Collapser(item, collapsed) {
+  Collapser = {
+    bindEvent: function(item, collapsed) {
       var collapser;
       collapser = document.createElement('div');
       collapser.className = 'collapser';
       collapser.innerHTML = collapsed ? '+' : '-';
-      collapser.addEventListener('click', ((function(_this) {
+      collapser.addEventListener('click', (function(_this) {
         return function(event) {
-          return _this.collapse(event.target);
+          return _this.toggle(event.target);
         };
-      })(this)), false);
+      })(this));
       item.insertBefore(collapser, item.firstChild);
       if (collapsed) {
-        this.collapse(collapser);
+        return this.collapse(collapser);
       }
-    }
-
-    Collapser.prototype.collapse = function(collapser) {
+    },
+    expand: function(collapser) {
       var ellipsis, target;
-      target = collapser.parentNode.getElementsByClassName('collapsible');
-      if (!target.length) {
+      target = this.collapseTarget(collapser);
+      ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
+      target.parentNode.removeChild(ellipsis);
+      target.style.display = '';
+      return collapser.innerHTML = '-';
+    },
+    collapse: function(collapser) {
+      var ellipsis, target;
+      target = this.collapseTarget(collapser);
+      target.style.display = 'none';
+      ellipsis = document.createElement('span');
+      ellipsis.className = 'ellipsis';
+      ellipsis.innerHTML = ' &hellip; ';
+      target.parentNode.insertBefore(ellipsis, target);
+      return collapser.innerHTML = '+';
+    },
+    toggle: function(collapser) {
+      var target;
+      target = this.collapseTarget(collapser);
+      if (target.style.display === 'none') {
+        return this.expand(collapser);
+      } else {
+        return this.collapse(collapser);
+      }
+    },
+    collapseTarget: function(collapser) {
+      var target, targets;
+      targets = collapser.parentNode.getElementsByClassName('collapsible');
+      if (!targets.length) {
         return;
       }
-      target = target[0];
-      if (target.style.display === 'none') {
-        ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
-        target.parentNode.removeChild(ellipsis);
-        target.style.display = '';
-        return collapser.innerHTML = '-';
-      } else {
-        target.style.display = 'none';
-        ellipsis = document.createElement('span');
-        ellipsis.className = 'ellipsis';
-        ellipsis.innerHTML = ' &hellip; ';
-        target.parentNode.insertBefore(ellipsis, target);
-        return collapser.innerHTML = '+';
-      }
-    };
-
-    return Collapser;
-
-  })();
-  (typeof module !== "undefined" && module !== null) && (module.exports = Collapser);
+      return target = targets[0];
+    }
+  };
   $ = jQuery;
+  JSONView = {
+    collapse: function(el) {
+      if (el.innerHTML === '-') {
+        return Collapser.collapse(el);
+      }
+    },
+    expand: function(el) {
+      if (el.innerHTML === '+') {
+        return Collapser.expand(el);
+      }
+    },
+    toggle: function(el) {
+      return Collapser.toggle(el);
+    }
+  };
   return $.fn.JSONView = function() {
-    var METHODS, args, defaultOptions, formatter, json, method, options, outputDoc;
-    METHODS = {
-      collapse: 'hide',
-      expand: 'show',
-      toggle: 'toggle'
-    };
+    var args, defaultOptions, formatter, json, method, options, outputDoc;
     args = arguments;
-    if (METHODS[args[0]] != null) {
-      method = METHODS[args[0]];
+    if (JSONView[args[0]] != null) {
+      method = args[0];
       return this.each(function() {
         var $this, level;
         $this = $(this);
         if (args[1] != null) {
           level = args[1];
-          return $this.find(".jsonview .level" + level)[method]();
+          return $this.find(".jsonview .collapsible.level" + level).siblings('.collapser').each(function() {
+            return JSONView[method](this);
+          });
         } else {
-          return $this.find('.jsonview > ul > li > .collapsible')[method]();
+          return $this.find('.jsonview > ul > li > .collapsible').siblings('.collapser').each(function() {
+            return JSONView[method](this);
+          });
         }
       });
     } else {
@@ -197,7 +220,7 @@
         for (_i = 0, _len = items.length; _i < _len; _i++) {
           item = items[_i];
           if (item.parentNode.nodeName === 'LI') {
-            _results.push(new Collapser(item.parentNode, options.collapsed));
+            _results.push(Collapser.bindEvent(item.parentNode, options.collapsed));
           } else {
             _results.push(void 0);
           }

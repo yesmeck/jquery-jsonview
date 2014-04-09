@@ -48,7 +48,7 @@ suite 'JSONFormatter', ->
     assert.equal(
       formatter.valueToHTML([1]),
       minify """
-      <span class="collapser"></span>[
+      [
         <ul class="array level0">
           <li><span class="num">1</span></li>
         </ul>
@@ -60,7 +60,7 @@ suite 'JSONFormatter', ->
     assert.equal(
       formatter.objectToHTML({a: 1}),
       minify """
-      <span class="collapser"></span>{
+      {
         <ul class="obj level0">
           <li>
             <span class="prop">
@@ -77,12 +77,12 @@ suite 'JSONFormatter', ->
     assert.equal(
       formatter.objectToHTML({a: {b: 1}}),
       minify """
-      <span class="collapser"></span>{
+      {
         <ul class="obj level0">
           <li>
             <span class="prop">
               <span class="q">"</span>a<span class="q">"</span>
-            </span>: <span class="collapser"></span>{
+            </span>: {
               <ul class="obj level1 collapsible">
                 <li>
                   <span class="prop">
