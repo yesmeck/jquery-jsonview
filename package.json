@@ -1,6 +1,6 @@
 {
   "name": "jsonview",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "jQuery plugin for display pretty JSON.",
   "main": "dist/jquery.jsonview.js",
   "scripts": {
