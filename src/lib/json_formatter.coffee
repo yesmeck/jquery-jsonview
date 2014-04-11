@@ -1,4 +1,7 @@
 class JSONFormatter
+  constructor: (options) ->
+    @options = options
+
   htmlEncode: (html) ->
     if html != null
       html.toString()
@@ -36,11 +39,13 @@ class JSONFormatter
       <a href="#{@htmlEncode(value)}"><span class="q">"</span>#{@jsString(value)}<span class="q">"</span></a>
       """
     else
-      newLinePattern = /([^>\\r\\n]?)(\\r\\n|\\n\\r|\\r|\\n)/g
-      value = @jsString(value)
-      multiline = if newLinePattern.test(value) then 'multiline' else ''
-      if multiline != ''
-        value = (value + '').replace(newLinePattern, '$1' + '<br />')
+      multiline = ''
+      if @options.nl2br
+        newLinePattern = /([^>\\r\\n]?)(\\r\\n|\\n\\r|\\r|\\n)/g
+        value = @jsString(value)
+        multiline = 'multiline' if newLinePattern.test(value)
+        if multiline != ''
+          value = (value + '').replace(newLinePattern, '$1' + '<br />')
       """
       <span class="string #{multiline}">"#{value}"</span>
       """

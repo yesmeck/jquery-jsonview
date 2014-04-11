@@ -38,11 +38,12 @@ do (jQuery) ->
       options = args[1] || {}
 
       defaultOptions =
-        collapsed: false
+        collapsed: false,
+        nl2br: false
 
       options = $.extend(defaultOptions, options)
 
-      formatter = new JSONFormatter
+      formatter = new JSONFormatter(nl2br: options.nl2br)
       # Covert, and catch exceptions on failure
       json = JSON.parse(json) if Object.prototype.toString.call(json) == '[object String]'
       outputDoc = formatter.jsonToHTML(json)

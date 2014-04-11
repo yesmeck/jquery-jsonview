@@ -1,7 +1,9 @@
 (function(jQuery) {
   var $, Collapser, JSONFormatter, JSONView;
   JSONFormatter = (function() {
-    function JSONFormatter() {}
+    function JSONFormatter(options) {
+      this.options = options;
+    }
 
     JSONFormatter.prototype.htmlEncode = function(html) {
       if (html !== null) {
@@ -42,11 +44,16 @@
       if (/^(http|https|file):\/\/[^\s]+$/i.test(value)) {
         return "<a href=\"" + (this.htmlEncode(value)) + "\"><span class=\"q\">\"</span>" + (this.jsString(value)) + "<span class=\"q\">\"</span></a>";
       } else {
-        newLinePattern = /([^>\\r\\n]?)(\\r\\n|\\n\\r|\\r|\\n)/g;
-        value = this.jsString(value);
-        multiline = newLinePattern.test(value) ? 'multiline' : '';
-        if (multiline !== '') {
-          value = (value + '').replace(newLinePattern, '$1' + '<br />');
+        multiline = '';
+        if (this.options.nl2br) {
+          newLinePattern = /([^>\\r\\n]?)(\\r\\n|\\n\\r|\\r|\\n)/g;
+          value = this.jsString(value);
+          if (newLinePattern.test(value)) {
+            multiline = 'multiline';
+          }
+          if (multiline !== '') {
+            value = (value + '').replace(newLinePattern, '$1' + '<br />');
+          }
         }
         return "<span class=\"string " + multiline + "\">\"" + value + "\"</span>";
       }
@@ -210,10 +217,13 @@
       json = args[0];
       options = args[1] || {};
       defaultOptions = {
-        collapsed: false
+        collapsed: false,
+        nl2br: false
       };
       options = $.extend(defaultOptions, options);
-      formatter = new JSONFormatter;
+      formatter = new JSONFormatter({
+        nl2br: options.nl2br
+      });
       if (Object.prototype.toString.call(json) === '[object String]') {
         json = JSON.parse(json);
       }

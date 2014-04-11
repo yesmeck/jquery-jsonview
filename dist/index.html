@@ -29,7 +29,7 @@
     $(function() {
       $("#json").JSONView(json);
 
-      $("#json-collapsed").JSONView(json, {collapsed: true});
+      $("#json-collapsed").JSONView(json, {collapsed: true, nl2br: true});
 
       $('#collapse-btn').on('click', function() {
         $('#json').JSONView('collapse');
