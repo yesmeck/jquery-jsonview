@@ -36,8 +36,13 @@ class JSONFormatter
       <a href="#{@htmlEncode(value)}"><span class="q">"</span>#{@jsString(value)}<span class="q">"</span></a>
       """
     else
+      newLinePattern = /([^>\\r\\n]?)(\\r\\n|\\n\\r|\\r|\\n)/g
+      value = @jsString(value)
+      multiline = if newLinePattern.test(value) then 'multiline' else ''
+      if multiline != ''
+        value = (value + '').replace(newLinePattern, '$1' + '<br />')
       """
-      <span class="string">"#{@jsString(value)}"</span>
+      <span class="string #{multiline}">"#{value}"</span>
       """
 
   booleanToHTML: (value) ->

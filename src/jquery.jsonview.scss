@@ -22,6 +22,11 @@
   .string {
     color: green;
     white-space: pre-wrap;
+
+    &.multiline {
+      display: inline-block;
+      vertical-align: text-top;
+    }
   }
 
   .collapser {

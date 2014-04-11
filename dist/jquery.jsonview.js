@@ -38,10 +38,17 @@
     };
 
     JSONFormatter.prototype.stringToHTML = function(value) {
+      var multiline, newLinePattern;
       if (/^(http|https|file):\/\/[^\s]+$/i.test(value)) {
         return "<a href=\"" + (this.htmlEncode(value)) + "\"><span class=\"q\">\"</span>" + (this.jsString(value)) + "<span class=\"q\">\"</span></a>";
       } else {
-        return "<span class=\"string\">\"" + (this.jsString(value)) + "\"</span>";
+        newLinePattern = /([^>\\r\\n]?)(\\r\\n|\\n\\r|\\r|\\n)/g;
+        value = this.jsString(value);
+        multiline = newLinePattern.test(value) ? 'multiline' : '';
+        if (multiline !== '') {
+          value = (value + '').replace(newLinePattern, '$1' + '<br />');
+        }
+        return "<span class=\"string " + multiline + "\">\"" + value + "\"</span>";
       }
     };
 
