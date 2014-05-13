@@ -47,7 +47,7 @@ class JSONFormatter
         if multiline != ''
           value = (value + '').replace(newLinePattern, '$1' + '<br />')
       """
-      <span class="string #{multiline}">"#{value}"</span>
+      <span class="string #{multiline}">"#{@htmlEncode(value)}"</span>
       """
 
   booleanToHTML: (value) ->
