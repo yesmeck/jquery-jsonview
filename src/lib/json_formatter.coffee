@@ -43,11 +43,11 @@ class JSONFormatter
       if @options.nl2br
         newLinePattern = /([^>\\r\\n]?)(\\r\\n|\\n\\r|\\r|\\n)/g
         value = @jsString(value)
-        multiline = 'multiline' if newLinePattern.test(value)
+        multiline = ' multiline' if newLinePattern.test(value)
         if multiline != ''
           value = (value + '').replace(newLinePattern, '$1' + '<br />')
       """
-      <span class="string #{multiline}">"#{value}"</span>
+      <span class="string#{multiline}">"#{value}"</span>
       """
 
   booleanToHTML: (value) ->
@@ -103,5 +103,5 @@ class JSONFormatter
     <div class="jsonview">#{@valueToHTML(json)}</div>
     """
 
-module? && module.exports = new JSONFormatter
+module? && module.exports = JSONFormatter
 

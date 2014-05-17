@@ -1,4 +1,5 @@
-formatter = require '../src/lib/json_formatter.coffee'
+Formatter = require '../src/lib/json_formatter.coffee'
+formatter = new Formatter({})
 
 minify = (str) ->
   str.replace(/(^\s*|\n)/gm, '')
