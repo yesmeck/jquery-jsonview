@@ -40,22 +40,20 @@
     };
 
     JSONFormatter.prototype.stringToHTML = function(value) {
-      var multiline, newLinePattern;
+      var multilineClass, newLinePattern;
       if (/^(http|https|file):\/\/[^\s]+$/i.test(value)) {
         return "<a href=\"" + (this.htmlEncode(value)) + "\"><span class=\"q\">\"</span>" + (this.jsString(value)) + "<span class=\"q\">\"</span></a>";
       } else {
-        multiline = '';
+        multilineClass = '';
+        value = this.jsString(value);
         if (this.options.nl2br) {
           newLinePattern = /([^>\\r\\n]?)(\\r\\n|\\n\\r|\\r|\\n)/g;
-          value = this.jsString(value);
           if (newLinePattern.test(value)) {
-            multiline = 'multiline';
-          }
-          if (multiline !== '') {
+            multilineClass = ' multiline';
             value = (value + '').replace(newLinePattern, '$1' + '<br />');
           }
         }
-        return "<span class=\"string " + multiline + "\">\"" + value + "\"</span>";
+        return "<span class=\"string" + multilineClass + "\">\"" + value + "\"</span>";
       }
     };
 
@@ -125,7 +123,7 @@
     return JSONFormatter;
 
   })();
-  (typeof module !== "undefined" && module !== null) && (module.exports = new JSONFormatter);
+  (typeof module !== "undefined" && module !== null) && (module.exports = JSONFormatter);
   Collapser = {
     bindEvent: function(item, collapsed) {
       var collapser;
