@@ -28,21 +28,8 @@ gulp.task 'dist', ->
     .pipe(preprocess(context: { dist: true }))
     .pipe(gulp.dest('dist'))
 
-gulp.task 'build', ->
-  gulp.src('src/**/*.coffee')
-    .pipe(coffee(bare: true))
-    .pipe(gulp.dest('build'))
-
-  gulp.src('src/*.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('build'))
-
-  gulp.src('src/index.html')
-    .pipe(preprocess(context: { dist: false }))
-    .pipe(gulp.dest('build'))
-
 gulp.task 'watch', ->
-  gulp.watch(['src/**/*', 'test/**/*'], ['build', 'dist', 'mocha'])
+  gulp.watch(['src/**/*', 'test/**/*'], ['dist', 'mocha'])
 
 gulp.task 'package', ->
   data = fs.readFileSync 'package.json', 'utf8'
