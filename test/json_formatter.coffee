@@ -1,5 +1,5 @@
 Formatter = require '../src/lib/json_formatter.coffee'
-formatter = new Formatter({})
+formatter = new Formatter
 
 minify = (str) ->
   str.replace(/(^\s*|\n)/gm, '')
@@ -98,3 +98,17 @@ suite 'JSONFormatter', ->
       """
     )
 
+  test 'multiline string', ->
+    formatter = new Formatter(nl2br: true)
+    assert.equal(
+      formatter.stringToHTML("line1\nline2\nline3"),
+      minify """
+      <span class="string multiline">
+        "line1
+        <br />
+        line2
+        <br />
+        line3"
+      </span>
+      """
+    )

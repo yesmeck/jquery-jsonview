@@ -2,6 +2,9 @@
   var $, Collapser, JSONFormatter, JSONView;
   JSONFormatter = (function() {
     function JSONFormatter(options) {
+      if (options == null) {
+        options = {};
+      }
       this.options = options;
     }
 

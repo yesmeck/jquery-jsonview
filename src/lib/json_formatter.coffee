@@ -1,5 +1,5 @@
 class JSONFormatter
-  constructor: (options) ->
+  constructor: (options = {}) ->
     @options = options
 
   htmlEncode: (html) ->
