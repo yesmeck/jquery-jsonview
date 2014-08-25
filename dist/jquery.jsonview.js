@@ -1,3 +1,7 @@
+/*!
+ * jQuery JSONView
+ * Licensed under the MIT License. 
+ */
 (function(jQuery) {
   var $, Collapser, JSONFormatter, JSONView;
   JSONFormatter = (function() {
