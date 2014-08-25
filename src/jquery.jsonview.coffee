@@ -1,3 +1,7 @@
+###!
+jQuery JSONView.
+Licensed under the MIT License. 
+###
 do (jQuery) ->
 
   # @include lib/json_formatter.coffee
