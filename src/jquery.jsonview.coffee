@@ -1,6 +1,6 @@
 ###!
 jQuery JSONView.
-Licensed under the MIT License. 
+Licensed under the MIT License.
 ###
 do (jQuery) ->
 
