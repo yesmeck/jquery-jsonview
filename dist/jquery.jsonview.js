@@ -1,6 +1,7 @@
+
 /*!
- * jQuery JSONView
- * Licensed under the MIT License. 
+jQuery JSONView.
+Licensed under the MIT License.
  */
 (function(jQuery) {
   var $, Collapser, JSONFormatter, JSONView;
@@ -131,8 +132,10 @@
 
   })();
   (typeof module !== "undefined" && module !== null) && (module.exports = JSONFormatter);
-  Collapser = {
-    bindEvent: function(item, collapsed) {
+  Collapser = (function() {
+    function Collapser() {}
+
+    Collapser.bindEvent = function(item, collapsed) {
       var collapser;
       collapser = document.createElement('div');
       collapser.className = 'collapser';
@@ -146,16 +149,18 @@
       if (collapsed) {
         return this.collapse(collapser);
       }
-    },
-    expand: function(collapser) {
+    };
+
+    Collapser.expand = function(collapser) {
       var ellipsis, target;
       target = this.collapseTarget(collapser);
       ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
       target.parentNode.removeChild(ellipsis);
       target.style.display = '';
       return collapser.innerHTML = '-';
-    },
-    collapse: function(collapser) {
+    };
+
+    Collapser.collapse = function(collapser) {
       var ellipsis, target;
       target = this.collapseTarget(collapser);
       target.style.display = 'none';
@@ -164,8 +169,9 @@
       ellipsis.innerHTML = ' &hellip; ';
       target.parentNode.insertBefore(ellipsis, target);
       return collapser.innerHTML = '+';
-    },
-    toggle: function(collapser) {
+    };
+
+    Collapser.toggle = function(collapser) {
       var target;
       target = this.collapseTarget(collapser);
       if (target.style.display === 'none') {
@@ -173,16 +179,20 @@
       } else {
         return this.collapse(collapser);
       }
-    },
-    collapseTarget: function(collapser) {
+    };
+
+    Collapser.collapseTarget = function(collapser) {
       var target, targets;
       targets = collapser.parentNode.getElementsByClassName('collapsible');
       if (!targets.length) {
         return;
       }
       return target = targets[0];
-    }
-  };
+    };
+
+    return Collapser;
+
+  })();
   $ = jQuery;
   JSONView = {
     collapse: function(el) {

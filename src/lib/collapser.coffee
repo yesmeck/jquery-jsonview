@@ -1,5 +1,5 @@
-Collapser =
-  bindEvent: (item, collapsed) ->
+class Collapser
+  @bindEvent: (item, collapsed) ->
     collapser = document.createElement('div')
     collapser.className = 'collapser'
     collapser.innerHTML = if collapsed then '+' else '-'
@@ -9,14 +9,14 @@ Collapser =
     item.insertBefore(collapser, item.firstChild)
     @collapse(collapser) if collapsed
 
-  expand: (collapser) ->
+  @expand: (collapser) ->
     target = @collapseTarget(collapser)
     ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0]
     target.parentNode.removeChild(ellipsis)
     target.style.display = ''
     collapser.innerHTML = '-'
 
-  collapse: (collapser) ->
+  @collapse: (collapser) ->
     target = @collapseTarget(collapser)
     target.style.display = 'none'
     ellipsis = document.createElement('span')
@@ -25,14 +25,14 @@ Collapser =
     target.parentNode.insertBefore(ellipsis, target)
     collapser.innerHTML = '+'
 
-  toggle: (collapser) ->
+  @toggle: (collapser) ->
     target = @collapseTarget(collapser)
     if target.style.display == 'none'
       @expand(collapser)
     else
       @collapse(collapser)
 
-  collapseTarget: (collapser) ->
+  @collapseTarget: (collapser) ->
     targets = collapser.parentNode.getElementsByClassName('collapsible')
     return unless targets.length
     target = targets[0]
