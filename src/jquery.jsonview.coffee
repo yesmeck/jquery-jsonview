@@ -35,7 +35,7 @@ do (jQuery) ->
 
         else
           # no level specify? collapse/expand all!
-          $this.find('.jsonview > ul > li > .collapsible').siblings('.collapser').each -> JSONView[method](this)
+          $this.find('.jsonview > ul > li .collapsible').siblings('.collapser').each -> JSONView[method](this)
 
     else
       json = args[0]

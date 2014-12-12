@@ -213,7 +213,7 @@
             return JSONView[method](this);
           });
         } else {
-          return $this.find('.jsonview > ul > li > .collapsible').siblings('.collapser').each(function() {
+          return $this.find('.jsonview > ul > li .collapsible').siblings('.collapser').each(function() {
             return JSONView[method](this);
           });
         }
