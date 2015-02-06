@@ -22,7 +22,8 @@ $(function() {
 
 ```javascript
 {
-  collapsed: false
+  collapsed: false,
+  nl2br: false
 }
 ```
 
