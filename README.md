@@ -8,40 +8,33 @@ Port of Ben Hollis's JSONView extension for Firefox: http://jsonview.com
 
 ## Usage
 
+### Example
+
 ```javascript
 var json = {"hey": "guy","anumber": 243,"anobject": {"whoa": "nuts","anarray": [1,2,"thr<h1>ee"], "more":"stuff"},"awesome": true,"bogus": false,"meaning": null, "japanese":"明日がある。", "link": "http://jsonview.com", "notLink": "http://jsonview.com is great"};
 
 $(function() {
   $("#json").JSONView(json);
   // with options
-  $("#json-collasped").JSONView(json, {collapsed: true});
+  $("#json-collasped").JSONView(json, { collapsed: true });
 });
 ```
 
-## Options
+### Options
 
-```javascript
-{
-  collapsed: false,
-  nl2br: false
-}
-```
+jQuery JSONView can be configured using the following options.
 
-## Methods
+* `collapsed` - Collapse all nodes when rendering first time, default is `false`.
+* `nl2br` - Convert new line to `<br>` in String, default is `false`.
+* `recursive_collapser` - Collapse nodes recursively, default is `false`.
 
-```javascript
-// collapse nodes
-$('#json').JSONView('collapse');
+### API
 
-// expand nodes
-$('#json').JSONView('expand');
+jQuery JSONView provide following methods to allow you control JSON nodes, all methods below accept a level argument to perform action on the specify node.
 
-// toggle nodes
-$('#json').JSONView('toggle');
-
-// toggle level1 nodes, also be supported in collapse and expand
-$('#json').JSONView('toggle', 1)
-```
+* `jQuery#JSONView('collapse', [level])` - Collapse nodes.
+* `jQuery#JSONView('expand', [level])` - Expand nodes.
+* `jQuery#JSONView('toggle', [level])` -  Toggle nodes.
 
 ## Licence
 
