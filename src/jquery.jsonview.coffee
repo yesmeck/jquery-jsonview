@@ -43,7 +43,8 @@ do (jQuery) ->
 
       defaultOptions =
         collapsed: false,
-        nl2br: false
+        nl2br: false,
+        recursive_collapser: false
 
       options = $.extend(defaultOptions, options)
 
@@ -60,5 +61,5 @@ do (jQuery) ->
         items = $this[0].getElementsByClassName('collapsible')
 
         for item in items
-          Collapser.bindEvent(item.parentNode, options.collapsed) if item.parentNode.nodeName == 'LI'
+          Collapser.bindEvent(item.parentNode, options) if item.parentNode.nodeName == 'LI'
 

@@ -135,18 +135,18 @@ Licensed under the MIT License.
   Collapser = (function() {
     function Collapser() {}
 
-    Collapser.bindEvent = function(item, collapsed) {
+    Collapser.bindEvent = function(item, options) {
       var collapser;
       collapser = document.createElement('div');
       collapser.className = 'collapser';
-      collapser.innerHTML = collapsed ? '+' : '-';
+      collapser.innerHTML = options.collapsed ? '+' : '-';
       collapser.addEventListener('click', (function(_this) {
         return function(event) {
-          return _this.toggle(event.target);
+          return _this.toggle(event.target, options);
         };
       })(this));
       item.insertBefore(collapser, item.firstChild);
-      if (collapsed) {
+      if (options.collapsed) {
         return this.collapse(collapser);
       }
     };
@@ -154,6 +154,9 @@ Licensed under the MIT License.
     Collapser.expand = function(collapser) {
       var ellipsis, target;
       target = this.collapseTarget(collapser);
+      if (target.style.display === '') {
+        return;
+      }
       ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
       target.parentNode.removeChild(ellipsis);
       target.style.display = '';
@@ -163,6 +166,9 @@ Licensed under the MIT License.
     Collapser.collapse = function(collapser) {
       var ellipsis, target;
       target = this.collapseTarget(collapser);
+      if (target.style.display === 'none') {
+        return;
+      }
       target.style.display = 'none';
       ellipsis = document.createElement('span');
       ellipsis.className = 'ellipsis';
@@ -171,13 +177,23 @@ Licensed under the MIT License.
       return collapser.innerHTML = '+';
     };
 
-    Collapser.toggle = function(collapser) {
-      var target;
+    Collapser.toggle = function(collapser, options) {
+      var action, collapsers, target, _i, _len, _results;
+      if (options == null) {
+        options = {};
+      }
       target = this.collapseTarget(collapser);
-      if (target.style.display === 'none') {
-        return this.expand(collapser);
+      action = target.style.display === 'none' ? 'expand' : 'collapse';
+      if (options.recursive_collapser) {
+        collapsers = collapser.parentNode.getElementsByClassName('collapser');
+        _results = [];
+        for (_i = 0, _len = collapsers.length; _i < _len; _i++) {
+          collapser = collapsers[_i];
+          _results.push(this[action](collapser));
+        }
+        return _results;
       } else {
-        return this.collapse(collapser);
+        return this[action](collapser);
       }
     };
 
@@ -233,7 +249,8 @@ Licensed under the MIT License.
       options = args[1] || {};
       defaultOptions = {
         collapsed: false,
-        nl2br: false
+        nl2br: false,
+        recursive_collapser: false
       };
       options = $.extend(defaultOptions, options);
       formatter = new JSONFormatter({
@@ -252,7 +269,7 @@ Licensed under the MIT License.
         for (_i = 0, _len = items.length; _i < _len; _i++) {
           item = items[_i];
           if (item.parentNode.nodeName === 'LI') {
-            _results.push(Collapser.bindEvent(item.parentNode, options.collapsed));
+            _results.push(Collapser.bindEvent(item.parentNode, options));
           } else {
             _results.push(void 0);
           }
