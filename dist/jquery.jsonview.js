@@ -1,7 +1,7 @@
 
 /*!
-jQuery JSONView.
-Licensed under the MIT License.
+ jQuery JSONView.
+ Licensed under the MIT License.
  */
 (function(jQuery) {
   var $, Collapser, JSONFormatter, JSONView;
@@ -133,13 +133,20 @@ Licensed under the MIT License.
   })();
   (typeof module !== "undefined" && module !== null) && (module.exports = JSONFormatter);
   Collapser = (function() {
-    function Collapser() {}
+    function Collapser() {
+    }
+
+    Collapser.marks = {
+      '+': '+',
+      '-': '-'
+    };
 
     Collapser.bindEvent = function(item, options) {
+      $.extend(this.marks, options.marks);
       var collapser;
       collapser = document.createElement('div');
       collapser.className = 'collapser';
-      collapser.innerHTML = options.collapsed ? '+' : '-';
+      collapser.innerHTML = options.collapsed ? this.marks['+'] : this.marks['-'];
       collapser.addEventListener('click', (function(_this) {
         return function(event) {
           return _this.toggle(event.target, options);
@@ -160,7 +167,7 @@ Licensed under the MIT License.
       ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
       target.parentNode.removeChild(ellipsis);
       target.style.display = '';
-      return collapser.innerHTML = '-';
+      return collapser.innerHTML = this.marks['-'];
     };
 
     Collapser.collapse = function(collapser) {
@@ -174,7 +181,7 @@ Licensed under the MIT License.
       ellipsis.className = 'ellipsis';
       ellipsis.innerHTML = ' &hellip; ';
       target.parentNode.insertBefore(ellipsis, target);
-      return collapser.innerHTML = '+';
+      return collapser.innerHTML = this.marks['+'];
     };
 
     Collapser.toggle = function(collapser, options) {
@@ -212,12 +219,12 @@ Licensed under the MIT License.
   $ = jQuery;
   JSONView = {
     collapse: function(el) {
-      if (el.innerHTML === '-') {
+      if (el.innerHTML === Collapser.marks['-']) {
         return Collapser.collapse(el);
       }
     },
     expand: function(el) {
-      if (el.innerHTML === '+') {
+      if (el.innerHTML === Collapser.marks['+']) {
         return Collapser.expand(el);
       }
     },
