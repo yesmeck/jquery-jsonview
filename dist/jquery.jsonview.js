@@ -143,6 +143,13 @@
 
     Collapser.bindEvent = function(item, options) {
       $.extend(this.marks, options.marks);
+      if (options['on_expand']) {
+        this.on_expand = options['on_expand'];
+      }
+      if (options['on_collapse']) {
+        this.on_collapse = options['on_collapse'];
+      }
+
       var collapser;
       collapser = document.createElement('div');
       collapser.className = 'collapser';
@@ -154,7 +161,7 @@
       })(this));
       item.insertBefore(collapser, item.firstChild);
       if (options.collapsed) {
-        return this.collapse(collapser);
+        return this.collapse(collapser, true);
       }
     };
 
@@ -164,17 +171,23 @@
       if (target.style.display === '') {
         return;
       }
+      if ('function' === typeof this.on_expand) {
+        this.on_expand(collapser);
+      }
       ellipsis = target.parentNode.getElementsByClassName('ellipsis')[0];
       target.parentNode.removeChild(ellipsis);
       target.style.display = '';
       return collapser.innerHTML = this.marks['-'];
     };
 
-    Collapser.collapse = function(collapser) {
+    Collapser.collapse = function(collapser, no_callback) {
       var ellipsis, target;
       target = this.collapseTarget(collapser);
       if (target.style.display === 'none') {
         return;
+      }
+      if (!no_callback && 'function' === typeof this.on_collapse) {
+        this.on_collapse(collapser);
       }
       target.style.display = 'none';
       ellipsis = document.createElement('span');
@@ -257,7 +270,9 @@
       defaultOptions = {
         collapsed: false,
         nl2br: false,
-        recursive_collapser: false
+        recursive_collapser: false,
+        on_collapse: null,
+        on_expand: null
       };
       options = $.extend(defaultOptions, options);
       formatter = new JSONFormatter({
