@@ -45,10 +45,12 @@ do (jQuery) ->
         collapsed: false,
         nl2br: false,
         recursive_collapser: false
+        escape: true
 
       options = $.extend(defaultOptions, options)
 
-      formatter = new JSONFormatter(nl2br: options.nl2br)
+      formatter = new JSONFormatter(nl2br: options.nl2br,
+                                    escape: options.escape)
       # Covert, and catch exceptions on failure
       json = JSON.parse(json) if Object.prototype.toString.call(json) == '[object String]'
       outputDoc = formatter.jsonToHTML(json)
