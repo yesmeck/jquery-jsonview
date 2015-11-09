@@ -27,6 +27,7 @@ jQuery JSONView can be configured using the following options.
 * `collapsed` - Collapse all nodes when rendering first time, default is `false`.
 * `nl2br` - Convert new line to `<br>` in String, default is `false`.
 * `recursive_collapser` - Collapse nodes recursively, default is `false`.
+* `escape` - Escape HTML in key, default is `true`.
 
 ### API
 
