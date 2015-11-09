@@ -96,7 +96,7 @@ Licensed under the MIT License.
     };
 
     JSONFormatter.prototype.objectToHTML = function(object, level) {
-      var collapsible, hasContents, numProps, output, prop, value;
+      var collapsible, hasContents, key, numProps, output, prop, value;
       if (level == null) {
         level = 0;
       }
@@ -109,7 +109,8 @@ Licensed under the MIT License.
       for (prop in object) {
         value = object[prop];
         hasContents = true;
-        output += "<li><span class=\"prop\"><span class=\"q\">\"</span>" + (this.jsString(prop)) + "<span class=\"q\">\"</span></span>: " + (this.valueToHTML(value, level + 1));
+        key = this.options.escape ? this.jsString(prop) : prop;
+        output += "<li><span class=\"prop\"><span class=\"q\">\"</span>" + key + "<span class=\"q\">\"</span></span>: " + (this.valueToHTML(value, level + 1));
         if (numProps > 1) {
           output += ',';
         }
@@ -250,11 +251,13 @@ Licensed under the MIT License.
       defaultOptions = {
         collapsed: false,
         nl2br: false,
-        recursive_collapser: false
+        recursive_collapser: false,
+        escape: true
       };
       options = $.extend(defaultOptions, options);
       formatter = new JSONFormatter({
-        nl2br: options.nl2br
+        nl2br: options.nl2br,
+        escape: options.escape
       });
       if (Object.prototype.toString.call(json) === '[object String]') {
         json = JSON.parse(json);
