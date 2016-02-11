@@ -20,15 +20,19 @@
   },
   "homepage": "https://github.com/yesmeck/jquery-jsonview",
   "devDependencies": {
-    "mocha": "^1.18.2",
     "coffee-script": "^1.7.1",
     "gulp": "^3.8.11",
     "gulp-coffee": "^1.4.1",
-    "gulp-util": "^2.2.14",
-    "gulp-ruby-sass": "^0.4.0",
     "gulp-concat": "^2.2.0",
+    "gulp-cssmin": "^0.1.7",
     "gulp-mocha": "^0.4.1",
-    "gulp-preprocess": "^1.0.1"
+    "gulp-preprocess": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-ruby-sass": "^0.4.0",
+    "gulp-uglify": "^1.5.2",
+    "gulp-util": "^2.2.14",
+    "mocha": "^1.18.2"
   },
   "jqueryJSON": {
     "title": "jQuery JSONView",
@@ -61,5 +65,6 @@
     "dependencies": {
       "jquery": "*"
     }
-  }
+  },
+  "dependencies": {}
 }

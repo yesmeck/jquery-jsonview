@@ -5,23 +5,44 @@ sass = require 'gulp-ruby-sass'
 concat = require 'gulp-concat'
 mocha = require 'gulp-mocha'
 preprocess = require 'gulp-preprocess'
+uglify = require('gulp-uglify')
+cssmin = require('gulp-cssmin')
+rename = require('gulp-rename')
+rimraf = require('gulp-rimraf')
 fs = require 'fs'
 
 gulp.task 'default', ['mocha']
+
+gulp.task 'clean', ->
+  gulp.src('dist', { read: false })
+   .pipe(rimraf())
 
 gulp.task 'mocha', ->
   gulp.src(['test/*.coffee'], { read: false })
     .pipe(mocha(ui: 'tdd'))
     .on('error', gutil.log)
 
-gulp.task 'dist', ->
+gulp.task 'dist', ['clean'], ->
   gulp.src(['src/jquery.jsonview.coffee'])
     .pipe(preprocess())
     .pipe(coffee(bare: true))
     .pipe(gulp.dest('dist'))
 
+  gulp.src(['src/jquery.jsonview.coffee'])
+    .pipe(preprocess())
+    .pipe(coffee(bare: true))
+    .pipe(uglify())
+		.pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest('dist'))
+
   gulp.src('src/*.scss')
     .pipe(sass())
+    .pipe(gulp.dest('dist'))
+
+  gulp.src('src/*.scss')
+    .pipe(sass())
+    .pipe(cssmin())
+		.pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('dist'))
 
   gulp.src('src/index.html')
