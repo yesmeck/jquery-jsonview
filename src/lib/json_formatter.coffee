@@ -85,7 +85,7 @@ class JSONFormatter
       hasContents = true
       key = if @options.escape then @jsString(prop) else prop
       output += """
-      <li><span class="prop"><span class="q">"</span>#{key}<span class="q">"</span></span>: #{@valueToHTML(value, level + 1)}
+      <li><a class="prop" href="javascript:;"><span class="q">"</span>#{key}<span class="q">"</span></a>: #{@valueToHTML(value, level + 1)}
       """
       output += ',' if numProps > 1
       output += '</li>'

@@ -64,9 +64,9 @@ suite 'JSONFormatter', ->
       {
         <ul class="obj level0">
           <li>
-            <span class="prop">
+            <a class="prop" href="javascript:;">
               <span class="q">"</span>a<span class="q">"</span>
-            </span>: <span class="num">1</span>
+            </a>: <span class="num">1</span>
           </li>
         </ul>
       }
@@ -81,14 +81,14 @@ suite 'JSONFormatter', ->
       {
         <ul class="obj level0">
           <li>
-            <span class="prop">
+            <a class="prop" href="javascript:;">
               <span class="q">"</span>a<span class="q">"</span>
-            </span>: {
+            </a>: {
               <ul class="obj level1 collapsible">
                 <li>
-                  <span class="prop">
+                  <a class="prop" href="javascript:;">
                     <span class="q">"</span>b<span class="q">"</span>
-                  </span>: <span class="num">1</span>
+                  </a>: <span class="num">1</span>
                 </li>
               </ul>
             }
