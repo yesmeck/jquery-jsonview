@@ -43,6 +43,10 @@ Licensed under the MIT License.
       return this.decorateWithSpan('null', 'null');
     };
 
+    JSONFormatter.prototype.undefinedToHTML = function() {
+      return this.decorateWithSpan('undefined', 'undefined');
+    };
+
     JSONFormatter.prototype.numberToHTML = function(value) {
       return this.decorateWithSpan(value, 'num');
     };

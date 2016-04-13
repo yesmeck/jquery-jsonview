@@ -30,6 +30,9 @@ class JSONFormatter
   nullToHTML: (value) ->
     @decorateWithSpan('null', 'null')
 
+  undefinedToHTML: () ->
+    @decorateWithSpan('undefined', 'undefined')
+
   numberToHTML: (value) ->
     @decorateWithSpan(value, 'num')
 
