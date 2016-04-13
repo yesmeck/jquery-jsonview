@@ -22,7 +22,7 @@ class JSONFormatter
     <span class="#{className}">#{@htmlEncode(value)}</span>
     """
 
-  # Convert a basic JSON datatype (number, string, boolean, null, object, array) into an HTML fragment.
+  # Convert a basic JSON datatype (number, string, boolean, null, undefined, object, array) into an HTML fragment.
   valueToHTML: (value, level = 0) ->
     valueType = Object.prototype.toString.call(value).match(/\s(.+)]/)[1].toLowerCase()
     @["#{valueType}ToHTML"].call(this, value, level)
