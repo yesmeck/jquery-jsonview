@@ -28,6 +28,7 @@ jQuery JSONView can be configured using the following options.
 * `nl2br` - Convert new line to `<br>` in String, default is `false`.
 * `recursive_collapser` - Collapse nodes recursively, default is `false`.
 * `escape` - Escape HTML in key, default is `true`.
+* `strict` - In strict mode, invalid JSON value type will throw a error, default is `false`.
 
 ### API
 

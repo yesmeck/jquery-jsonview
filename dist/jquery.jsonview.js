@@ -4,7 +4,8 @@ jQuery JSONView.
 Licensed under the MIT License.
  */
 (function(jQuery) {
-  var $, Collapser, JSONFormatter, JSONView;
+  var $, Collapser, JSONFormatter, JSONView, JSON_VALUE_TYPE;
+  JSON_VALUE_TYPE = ['object', 'array', 'number', 'string', 'bool', 'null'];
   JSONFormatter = (function() {
     function JSONFormatter(options) {
       if (options == null) {
@@ -36,6 +37,9 @@ Licensed under the MIT License.
         level = 0;
       }
       valueType = Object.prototype.toString.call(value).match(/\s(.+)]/)[1].toLowerCase();
+      if (this.options.strict && !jQuery.inArray(valueType, JSON_VALUE_TYPE)) {
+        throw new Error("" + valueType + " is not a valid JSON value type");
+      }
       return this["" + valueType + "ToHTML"].call(this, value, level);
     };
 
@@ -256,13 +260,11 @@ Licensed under the MIT License.
         collapsed: false,
         nl2br: false,
         recursive_collapser: false,
-        escape: true
+        escape: true,
+        strict: false
       };
       options = $.extend(defaultOptions, options);
-      formatter = new JSONFormatter({
-        nl2br: options.nl2br,
-        escape: options.escape
-      });
+      formatter = new JSONFormatter(options);
       if (Object.prototype.toString.call(json) === '[object String]') {
         json = JSON.parse(json);
       }
