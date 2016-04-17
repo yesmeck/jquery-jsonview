@@ -5,7 +5,8 @@
   white-space: pre-wrap; }
   .jsonview .prop {
     font-weight: bold;
-    text-decoration: none; }
+    text-decoration: none;
+    color: #000; }
   .jsonview .null {
     color: red; }
   .jsonview .bool {
