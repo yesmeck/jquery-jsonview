@@ -1,5 +1,8 @@
 class Collapser
   @bindEvent: (item, options) ->
+    item.firstChild.addEventListener('click', (event) =>
+      @toggle(event.target.parentNode.firstChild, options)
+    )
     collapser = document.createElement('div')
     collapser.className = 'collapser'
     collapser.innerHTML = if options.collapsed then '+' else '-'

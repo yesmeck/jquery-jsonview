@@ -118,7 +118,7 @@ Licensed under the MIT License.
         value = object[prop];
         hasContents = true;
         key = this.options.escape ? this.jsString(prop) : prop;
-        output += "<li><span class=\"prop\"><span class=\"q\">\"</span>" + key + "<span class=\"q\">\"</span></span>: " + (this.valueToHTML(value, level + 1));
+        output += "<li><a class=\"prop\" href=\"javascript:;\"><span class=\"q\">\"</span>" + key + "<span class=\"q\">\"</span></a>: " + (this.valueToHTML(value, level + 1));
         if (numProps > 1) {
           output += ',';
         }
@@ -146,6 +146,11 @@ Licensed under the MIT License.
 
     Collapser.bindEvent = function(item, options) {
       var collapser;
+      item.firstChild.addEventListener('click', (function(_this) {
+        return function(event) {
+          return _this.toggle(event.target.parentNode.firstChild, options);
+        };
+      })(this));
       collapser = document.createElement('div');
       collapser.className = 'collapser';
       collapser.innerHTML = options.collapsed ? '+' : '-';
