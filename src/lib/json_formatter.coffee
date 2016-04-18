@@ -1,4 +1,4 @@
-JSON_VALUE_TYPE = [ 'object', 'array', 'number', 'string', 'boolean', 'null' ]
+JSON_VALUE_TYPES = [ 'object', 'array', 'number', 'string', 'boolean', 'null' ]
 
 class JSONFormatter
   constructor: (options = {}) ->
@@ -27,7 +27,7 @@ class JSONFormatter
   # Convert a basic JSON datatype (number, string, boolean, null, undefined, object, array) into an HTML fragment.
   valueToHTML: (value, level = 0) ->
     valueType = Object.prototype.toString.call(value).match(/\s(.+)]/)[1].toLowerCase()
-    if @options.strict and !jQuery.inArray(valueType, JSON_VALUE_TYPE)
+    if @options.strict and !jQuery.inArray(valueType, JSON_VALUE_TYPES)
       throw new Error("#{valueType} is not a valid JSON value type")
 
     @["#{valueType}ToHTML"].call(this, value, level)

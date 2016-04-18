@@ -4,8 +4,8 @@ jQuery JSONView.
 Licensed under the MIT License.
  */
 (function(jQuery) {
-  var $, Collapser, JSONFormatter, JSONView, JSON_VALUE_TYPE;
-  JSON_VALUE_TYPE = ['object', 'array', 'number', 'string', 'boolean', 'null'];
+  var $, Collapser, JSONFormatter, JSONView, JSON_VALUE_TYPES;
+  JSON_VALUE_TYPES = ['object', 'array', 'number', 'string', 'boolean', 'null'];
   JSONFormatter = (function() {
     function JSONFormatter(options) {
       if (options == null) {
@@ -37,7 +37,7 @@ Licensed under the MIT License.
         level = 0;
       }
       valueType = Object.prototype.toString.call(value).match(/\s(.+)]/)[1].toLowerCase();
-      if (this.options.strict && !jQuery.inArray(valueType, JSON_VALUE_TYPE)) {
+      if (this.options.strict && !jQuery.inArray(valueType, JSON_VALUE_TYPES)) {
         throw new Error("" + valueType + " is not a valid JSON value type");
       }
       return this["" + valueType + "ToHTML"].call(this, value, level);
