@@ -1,4 +1,4 @@
-JSON_VALUE_TYPE = [ 'object', 'array', 'number', 'string', 'bool', 'null' ]
+JSON_VALUE_TYPE = [ 'object', 'array', 'number', 'string', 'boolean', 'null' ]
 
 class JSONFormatter
   constructor: (options = {}) ->

@@ -5,7 +5,7 @@ Licensed under the MIT License.
  */
 (function(jQuery) {
   var $, Collapser, JSONFormatter, JSONView, JSON_VALUE_TYPE;
-  JSON_VALUE_TYPE = ['object', 'array', 'number', 'string', 'bool', 'null'];
+  JSON_VALUE_TYPE = ['object', 'array', 'number', 'string', 'boolean', 'null'];
   JSONFormatter = (function() {
     function JSONFormatter(options) {
       if (options == null) {
