@@ -140,7 +140,9 @@ Licensed under the MIT License.
     return JSONFormatter;
 
   })();
-  (typeof module !== "undefined" && module !== null) && (module.exports = JSONFormatter);
+  if ((module && module.exports) != null) {
+    module.exports = JSONFormatter;
+  }
   Collapser = (function() {
     function Collapser() {}
 
