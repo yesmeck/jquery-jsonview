@@ -1,5 +1,8 @@
 # jQuery JSONView
 
+[![OpenCollective](https://opencollective.com/jquery-jsonview/backers/badge.svg)](#backers)
+[![OpenCollective](https://opencollective.com/jquery-jsonview/sponsors/badge.svg)](#sponsors)
+
 Formats & syntax highlights JSON.
 
 Port of Ben Hollis's JSONView extension for Firefox: http://jsonview.com
@@ -38,6 +41,36 @@ jQuery JSONView provide following methods to allow you control JSON nodes, all m
 * `jQuery#JSONView('expand', [level])` - Expand nodes.
 * `jQuery#JSONView('toggle', [level])` -  Toggle nodes.
 
-## Licence
+
+## Contributors
+
+This project exists thanks to all the people who contribute.
+<a href="graphs/contributors"><img src="https://opencollective.com/jquery-jsonview/contributors.svg?width=890" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/jquery-jsonview#backer)]
+
+<a href="https://opencollective.com/jquery-jsonview#backers" target="_blank"><img src="https://opencollective.com/jquery-jsonview/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/jquery-jsonview#sponsor)]
+
+<a href="https://opencollective.com/jquery-jsonview/sponsor/0/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/1/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/2/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/3/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/4/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/5/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/6/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/7/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/8/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/jquery-jsonview/sponsor/9/website" target="_blank"><img src="https://opencollective.com/jquery-jsonview/sponsor/9/avatar.svg"></a>
+
+
+## License
 
 [MIT](http://opensource.org/licenses/MIT)
