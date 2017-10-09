@@ -78,7 +78,7 @@ Licensed under the MIT License.
     };
 
     JSONFormatter.prototype.arrayToHTML = function(array, level) {
-      var collapsible, hasContents, index, numProps, output, value, _i, _len;
+      var collapsible, hasContents, index, key, numProps, output, value, _i, _len;
       if (level == null) {
         level = 0;
       }
@@ -88,7 +88,8 @@ Licensed under the MIT License.
       for (index = _i = 0, _len = array.length; _i < _len; index = ++_i) {
         value = array[index];
         hasContents = true;
-        output += '<li>' + this.valueToHTML(value, level + 1);
+        key = index;
+        output += '<li><a class="prop" href="javascript:;"><span class="q">\"</span>' + key + '<span class="q">\"</span></a>: ' + (this.valueToHTML(value, level + 1));
         if (numProps > 1) {
           output += ',';
         }
